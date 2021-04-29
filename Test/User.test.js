@@ -21,18 +21,18 @@ describe('where there is only one user in db', () => {
     const userAtStart = await helper.usersInDb()
 
     const newUser = {
-      username: 'mluukkai',
-      password: 'salainen'
+      username: '1234',
+      password: '1234'
     }
 
     await api
       .post('/api/users')
       .send(newUser)
-      .expect(200)
+      .expect(201)
       .expect('Content-Type', /application\/json/)
 
     const usersAtEnd = await helper.usersInDb()
-    expect(usersAtEnd).toHaveLenght(userAtStart.length + 1)
+    expect(usersAtEnd).toHaveLength(userAtStart.length + 1)
 
     const usernames = usersAtEnd.map(u => u.username)
     expect(usernames).toContain(newUser.username)

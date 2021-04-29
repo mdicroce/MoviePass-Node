@@ -17,15 +17,8 @@ personRouter.get('/', async (request, response, next) => {
     next(error)
   }
 })
-personRouter.get('/info', (request, response) => {
-  const size = persons.length
-  const time = new Date()
-  const text = `<p>Phonebook has info for ${size} people </p>
-    <p> ${time}</p>`
-  response.send(text)
-})
 
-personRouter.post('/', async (request, response) => {
+personRouter.post('/', async (request, response, next) => {
   const { body } = request
   const text = errorPost(body)
 
@@ -34,7 +27,7 @@ personRouter.post('/', async (request, response) => {
       error: text
     }).end()
   } else {
-    const newPerson = new person({
+    const newPerson = new Person({
       name: body.name,
       number: body.number
     })
