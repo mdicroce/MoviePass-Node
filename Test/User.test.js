@@ -37,7 +37,17 @@ describe('where there is only one user in db', () => {
     const usernames = usersAtEnd.map(u => u.username)
     expect(usernames).toContain(newUser.username)
   })
-  afterAll(() => {
-    mongoose.connection.close()
+
+  test('login succesfully', async () => {
+    const userToLogin = { username: 'root', password: 'menem' }
+
+    await api
+      .post('/api/login')
+      .send(userToLogin)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+  })
+  afterAll(async () => {
+    await mongoose.connection.close()
   })
 })
